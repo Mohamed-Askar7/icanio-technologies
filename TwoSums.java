@@ -1,14 +1,49 @@
-class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        for(int i=0;i<=nums.length;i++){
-            for(int j=i+1;j<nums.length;j++){
-                if(nums[i]+nums[j]==target){
-                    return new int[]{i,j};
+import java.util.*;
+
+public class TwoSums{
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+        Stack<Character> stack = new Stack<>();
+
+        boolean valid = true;
+
+        for (char ch : s.toCharArray()) {
+
+            // Opening brackets
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack.push(ch);
+            }
+
+            // Closing brackets
+            else {
+
+                // If stack is empty
+                if (stack.isEmpty()) {
+                    valid = false;
+                    break;
                 }
-                
+
+                char top = stack.pop();
+
+                // Check matching
+                if ((ch == ')' && top != '(') ||
+                    (ch == '}' && top != '{') ||
+                    (ch == ']' && top != '[')) {
+
+                    valid = false;
+                    break;
+                }
             }
         }
-        return new int[]{-1,-1};
-    }
 
+        // If stack still has elements
+        if (!stack.isEmpty()) {
+            valid = false;
+        }
+
+        System.out.println(valid);
+    }
 }
